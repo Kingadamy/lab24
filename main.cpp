@@ -1,14 +1,15 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <list>
+#include <set>
 #include "Goat.h"
 using namespace std;
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
+//change all list functions to set functions
 
-int select_goat(list<Goat> trip){
+int select_goat(set<Goat> trip){
     cout << "Which goat would you like to delete? (pick a number) \n";
     int count = 1;
     for(auto goat : trip) { // this loop goes through each goat in the list
@@ -24,7 +25,7 @@ int select_goat(list<Goat> trip){
 
 }
 
-void delete_goat(list<Goat> &trip) {
+void delete_goat(set<Goat> &trip) {
     if(trip.empty()) { // check if the list is empty
         cout << "No goats to delete.\n";
         return;
@@ -48,7 +49,7 @@ void delete_goat(list<Goat> &trip) {
                         
 
 
-void add_goat(list<Goat> &trip, string names[], string colors[]) { // create a new goat with random name, color, age
+void add_goat(set<Goat> &trip, string names[], string colors[]) { // create a new goat with random name, color, age
     int name_used = rand() % SZ_NAMES; // select random name from the names array
     int color_used = rand() % SZ_COLORS; // select random color from the colors array
     int age = rand() % (MAX_AGE + 1); // select random age from 0 to MAX_AGE
@@ -58,13 +59,15 @@ void add_goat(list<Goat> &trip, string names[], string colors[]) { // create a n
     new_goat.set_color(colors[color_used]); // set the color
     new_goat.set_age(age); // set age
 
-    trip.push_back(new_goat); // add the new goat to the list
+    trip.insert(new_goat); // add the new goat to the list
+
+    // we needed to change to insert bc we are using set now
 
     cout << "Added goat: " << new_goat.get_name() << ", Age: " << new_goat.get_age()
          << ", Color: " << new_goat.get_color() << endl;
 }
 
-void display_trip(list<Goat> trip) { // display all goats in the trip
+void display_trip(set<Goat> trip) { // display all goats in the trip
     if(trip.empty()) { // check if the list is empty
         cout << "No goats in the trip.\n";
         return;
@@ -114,7 +117,7 @@ int main() {
     while (fin1 >> colors[i++]);
     fin1.close();
 
-    list<Goat> trip; // create the list 
+    set<Goat> trip; // create the list 
 
     while(true) {
         int choice = main_menu(); // show the menu and get user choice
